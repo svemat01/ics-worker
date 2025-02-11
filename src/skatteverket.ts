@@ -62,12 +62,16 @@ export const createSkatteverketDatesCalendar = async (options: Omit<Skatteverket
 
 	const now = new Date();
 
-	for (const date of [...previousDates.viktigaDatum, ...dates.viktigaDatum]) {
-		for (const dateString of date.dates) {
+	for (const event of [...previousDates.viktigaDatum, ...dates.viktigaDatum]) {
+		if (event.arbetsgivare && !options.arbetsgivare) {
+			continue;
+		}
+
+		for (const dateString of event.dates) {
 			calendar.events!.push({
-				uid: `${date.id}-${dateString}`,
-				summary: `${date.type} ${date.category}`,
-				url: date.uri.startsWith('/') ? `https://www.skatteverket.se${date.uri}` : date.uri,
+				uid: `${event.id}-${dateString}`,
+				summary: `${event.type} ${event.category}`,
+				url: event.uri.startsWith('/') ? `https://www.skatteverket.se${event.uri}` : event.uri,
 				stamp: {
 					date: now,
 					type: 'DATE',
