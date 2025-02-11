@@ -5,8 +5,8 @@ export const skatteverketDatesOptionsSchema = z.object({
 	foretagsform: z.enum(['ENSKILD_NARINGSIDKARE', 'AKTIEBOLAG_FORENINGAR', 'HANDELSBOLAG_KOMMANDITBOLAG']).default('ENSKILD_NARINGSIDKARE'),
 	momsredovisningsperiod: z.enum(['AR', 'KVARTAL', 'MANAD']).default('KVARTAL'),
 	omsattning: z.enum(['UPP_TILL_EN_MILJON', 'MER_AN_EN_MILJON_TILL_FYRTIO_MILJONER', 'OVER_FYRTIO_MILJONER']).default('UPP_TILL_EN_MILJON'),
-	rakenskapsaretsSistaManad: z.number().int().min(1).max(12).default(12),
-	arbetsgivare: z.boolean().default(false),
+	rakenskapsaretsSistaManad: z.coerce.number().int().min(1).max(12).default(12),
+	arbetsgivare: z.coerce.boolean().default(false),
 });
 
 export type SkatteverketDatesOptions = z.infer<typeof skatteverketDatesOptionsSchema>;
